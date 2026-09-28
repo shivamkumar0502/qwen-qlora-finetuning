@@ -143,6 +143,11 @@
       font-weight: 600;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .primary {
       background: linear-gradient(90deg, #7c3aed, #06b6d4);
       color: white;
@@ -310,11 +315,16 @@
 
     <div class="buttons">
 
-      <button class="primary" onclick="generateDemo()">
+      <button
+        id="generateBtn"
+        class="primary"
+        onclick="generateDemo()">
         ✨ Generate Response
       </button>
 
-      <button class="secondary" onclick="clearPrompt()">
+      <button
+        class="secondary"
+        onclick="clearPrompt()">
         Clear
       </button>
 
@@ -427,9 +437,25 @@
 
 <script>
 
+/* ============================================
+   RENDER BACKEND API
+   ============================================ */
+
+const API_URL = "https://qwen-qlora-finetuning.onrender.com";
+
+
+/* ============================================
+   PROMPT EXAMPLES
+   ============================================ */
+
 function setPrompt(text) {
   document.getElementById("prompt").value = text;
 }
+
+
+/* ============================================
+   CLEAR
+   ============================================ */
 
 function clearPrompt() {
 
@@ -439,13 +465,24 @@ function clearPrompt() {
     "Enter a prompt to test the demo interface.";
 }
 
-function generateDemo() {
+
+/* ============================================
+   GENERATE RESPONSE
+   ============================================ */
+
+async function generateDemo() {
 
   const prompt =
     document.getElementById("prompt").value.trim();
 
   const response =
     document.getElementById("response");
+
+  const generateBtn =
+    document.getElementById("generateBtn");
+
+
+  /* Empty prompt check */
 
   if (!prompt) {
 
@@ -455,10 +492,82 @@ function generateDemo() {
     return;
   }
 
+
+  /* Loading state */
+
+  generateBtn.disabled = true;
+
+  generateBtn.textContent =
+    "⏳ Generating...";
+
   response.textContent =
-    "Demo interface is working.\n\n" +
-    "Live model inference is not connected in this Static Space yet.\n\n" +
-    "The trained LoRA adapter is available in the Hugging Face model repository.";
+    "Connecting to the fine-tuned model...\n\nPlease wait.";
+
+
+  try {
+
+    /* Call Render backend */
+
+    const apiResponse = await fetch(
+      `${API_URL}/generate`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          prompt: prompt,
+          max_new_tokens: 200
+        })
+      }
+    );
+
+
+    /* Parse JSON response */
+
+    const data =
+      await apiResponse.json();
+
+
+    /* Handle API errors */
+
+    if (!apiResponse.ok) {
+
+      throw new Error(
+        data.detail || "Request failed"
+      );
+
+    }
+
+
+    /* Display model response */
+
+    response.textContent =
+      data.response || "No response received.";
+
+
+  } catch (error) {
+
+    console.error("Generation error:", error);
+
+    response.textContent =
+      "❌ Error generating response.\n\n" +
+      error.message +
+      "\n\nPlease check the Render backend logs.";
+
+
+  } finally {
+
+    /* Restore button */
+
+    generateBtn.disabled = false;
+
+    generateBtn.textContent =
+      "✨ Generate Response";
+
+  }
 
 }
 
