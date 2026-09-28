@@ -60,21 +60,25 @@ def generate(request: GenerateRequest):
         )
 
     try:
-        client = InferenceClient(token=HF_TOKEN)
+        client = InferenceClient(
+            token=HF_TOKEN
+        )
 
-        result = client.text_generation(
-            prompt=request.prompt,
+        result = client.chat_completion(
             model=BASE_MODEL,
-            adapter_id=ADAPTER_ID,
-            max_new_tokens=request.max_new_tokens,
+            messages=[
+                {
+                    "role": "user",
+                    "content": request.prompt
+                }
+            ],
+            max_tokens=request.max_new_tokens,
             temperature=0.7,
             top_p=0.9,
-            do_sample=True,
-            return_full_text=False,
         )
 
         return {
-            "response": result
+            "response": result.choices[0].message.content
         }
 
     except Exception as e:
