@@ -1,0 +1,21 @@
+id,question,base_correctness,base_instruction,base_relevance,base_clarity,ft_correctness,ft_instruction,ft_relevance,ft_clarity,base_total,ft_total,difference
+1,Explain overfitting in simple words with a real-life example.,5,5,5,4,5,5,5,4,19,19,0
+2,What is the difference between supervised and unsupervised learning?,5,5,5,5,5,5,5,5,20,20,0
+3,Explain gradient descent to a beginner.,5,5,5,5,5,4,5,4,20,18,-2
+4,What is the purpose of a validation dataset?,5,5,5,5,5,5,5,4,20,19,-1
+5,Why is feature scaling important in machine learning?,4,4,5,4,3,4,5,4,17,16,-1
+6,Explain precision and recall with a simple example.,3,5,5,3,4,5,5,4,16,18,2
+7,What is the difference between classification and regression?,5,5,5,5,3,5,5,4,20,17,-3
+8,Explain neural networks in simple terms.,5,5,5,4,5,5,5,4,19,19,0
+9,What is an epoch in deep learning?,3,5,5,4,5,5,5,5,17,20,3
+10,Why do we use a learning rate in gradient descent?,5,5,5,4,4,5,5,4,19,18,-1
+11,Write a professional email asking for an internship opportunity.,5,5,5,5,5,5,5,5,20,20,0
+12,Summarize the concept of machine learning in exactly two sentences.,5,0,5,5,5,0,5,5,15,15,0
+13,Give three practical applications of deep learning.,5,5,5,5,5,5,5,4,20,19,-1
+14,Explain the difference between training loss and validation loss.,4,5,5,4,2,5,5,4,18,16,-2
+15,What happens when a model has very high variance?,5,5,5,5,5,5,5,4,20,19,-1
+16,Explain transfer learning and why it is useful.,5,5,5,4,3,5,5,4,19,17,-2
+17,What is fine-tuning in the context of large language models?,4,5,5,4,5,5,5,5,18,20,2
+18,Explain LoRA in simple words.,2,5,4,3,1,5,4,4,14,14,0
+19,Why can a model perform well on training data but poorly on new data?,4,5,5,4,3,5,5,4,18,17,-1
+20,Explain the difference between a test set and a validation set.,4,4,5,4,4,5,5,4,17,18,1
