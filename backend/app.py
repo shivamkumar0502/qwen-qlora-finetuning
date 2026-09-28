@@ -61,7 +61,8 @@ def generate(request: GenerateRequest):
 
     try:
         client = InferenceClient(
-            token=HF_TOKEN
+            token=HF_TOKEN,
+            provider="featherless-ai"
         )
 
         result = client.chat_completion(
@@ -82,6 +83,7 @@ def generate(request: GenerateRequest):
         }
 
     except Exception as e:
+        print("HF INFERENCE ERROR:", repr(e))
         raise HTTPException(
             status_code=500,
             detail=str(e)
